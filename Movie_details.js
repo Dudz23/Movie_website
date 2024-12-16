@@ -16,7 +16,7 @@ function getMovieIdFromURL() {
 
 async function fetchMovieDetails(movieId) {
     try {
-
+      
         const [detailResponse, creditsResponse, similarResponse] = await Promise.all([
             axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`),
             axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}`),
@@ -27,7 +27,7 @@ async function fetchMovieDetails(movieId) {
         const credits = creditsResponse.data;
         const similarMovies = similarResponse.data.results;
 
-
+        
         renderMovieDetails(movie, credits);
         renderSimilarMovies(similarMovies);
     } catch (error) {
@@ -48,22 +48,22 @@ function renderMovieDetails(movie, credits) {
 
 
         movieMainDetails.innerHTML = `
-            <div class="movie-poster">
-                <img src="${poster_path}" alt="${movie.title}">
+        <div class="movie-poster">
+            <img src="${posterPath}" alt="${movie.title}">
+        </div>
+        <div class="movie-header">
+            <h1>${movie.title}</h1>
+            <div class="movie-quick-stats">
+                <span>⭐ ${movie.vote_average.toFixed(1)}/10</span>
+                <span>🕒 ${movie.runtime} mins</span>
+                <span>📅 ${movie.release_date}</span>
             </div>
-            <div class="movie-header">
-                <h1>${movie.title}</h1>
-                <div class="movie-quick-stats">
-                    <span>⭐ ${movie.vote_average.toFixed(1)}/10</span>
-                    <span>🕒 ${movie.runtime} mins</span>
-                    <span>📅 ${movie.release_date}</span>
-                </div>
-            </div>
-        `;
+        </div>
+    `;
 
-        movieSynopsis.textContent = movie.overview;
+    movieSynopsis.textContent = movie.overview;
 
-        movieMetadata.innerHTML = `
+    movieMetadata.innerHTML = `
         <p><strong>Genres:</strong> ${movie.genres.map(g => g.name).join(', ')}</p>
         <p><strong>Production Companies:</strong> ${movie.production_companies.map(c => c.name).join(', ')}</p>
         <p><strong>Original Language:</strong> ${movie.original_language}</p>
@@ -85,20 +85,19 @@ function renderMovieDetails(movie, credits) {
 }
 
 function renderSimilarMovies(movies) {
-    similarMoviesList.innerHTML = similarMovies.slice(0, 6).map(movie => `
+    similarMoviesList.innerHTML = movies.slice(0, 6).map(movie => `
         <div class="movie-card" onclick="navigateToMovieDetails(${movie.id})">
             <img src="${movie.poster_path 
                 ? BASE_IMAGE_URL + movie.poster_path 
                 : 'https://via.placeholder.com/300x450?text=No+Image'}" 
-                alt="${movie.title}">
+                 alt="${movie.title}">
             <div class="movie-card-details">
                 <h4>${movie.title}</h4>
                 <p>Rating: ${movie.vote_average.toFixed(1)}</p>
             </div>
         </div>
-
+        
     `).join('');
-
 }
 
 function navigateToMovieDetails(movieId) {
