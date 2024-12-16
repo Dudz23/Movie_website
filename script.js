@@ -2,6 +2,9 @@ const API_KEY = '1bfdbff05c2698dc917dd28c08d41096';
 const BASE_IMAGE_URL = 'http://image.tmdb.org/t/p/w500';
 
 const upcomingMoviesList = document.getElementById('upcomingMoviesList');
+const searchInput = document.getElementById('searchInput');
+const searchButton = document.getElementById('searchButton');
+const searchResultsList = document.getElementById('searchResultsList');
 
 async function fetchUpcomingMovies() {
     try {
@@ -9,6 +12,18 @@ async function fetchUpcomingMovies() {
         displayMovies(response.data.results, upcomingMoviesList);
     } catch (error) {
         console.error('Error fetching upcoming movies:', error);
+    }
+}
+
+async function searchMovies() {
+    const query = searchInput.value;
+    if (!query) return;
+
+    try {
+        const response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`);
+        displayMovies(response.data.results, searchResultsList);
+    } catch (error) {
+        console.error('Error searching movies:', error);
     }
 }
 
@@ -35,3 +50,8 @@ function displayMovies(movies, container) {
 }
 
 document.addEventListener('DOMContentLoaded', fetchUpcomingMovies);
+
+searchButton.addEventListener('click', searchMovies);
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') searchMovies();
+});
