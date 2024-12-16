@@ -7,6 +7,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    line-height: 1.6;
 }
 
 .container {
@@ -18,6 +19,7 @@ body {
 
 header {
     text-align: center;
+    margin-bottom: 30px;
 }
 
 .search-container {
@@ -29,7 +31,7 @@ header {
 #searchInput {
     width: 300px;
     padding: 10px;
-    margin-right: 10px;
+    font-size: 16px;
 }
 
 #searchButton {
@@ -37,12 +39,36 @@ header {
     background-color: #007bff;
     color: white;
     border: none;
+    cursor: pointer;
 }
 
 .movie-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
+}
+
+.movie-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+.movie-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.movie-card-details {
+    padding: 10px;
 }
 
 .modal {
@@ -72,4 +98,77 @@ header {
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+#movieDetailsSection {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.movie-poster img {
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.movie-header {
+    margin-bottom: 20px;
+}
+
+.movie-quick-stats {
+    display: flex;
+    gap: 15px;
+    color: #666;
+}
+
+#movieAdditionalInfo {
+    flex: 1;
+}
+
+.movie-metadata p {
+    margin: 10px 0;
+}
+
+.cast-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.cast-member {
+    text-align: center;
+}
+
+.cast-member img {
+    width: 100%;
+    max-width: 150px;
+    border-radius: 5px;
+}
+
+.back-home-btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #movieDetailsSection {
+        flex-direction: column;
+    }
+
+    .cast-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
