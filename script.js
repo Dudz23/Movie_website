@@ -45,6 +45,10 @@ function displayMovies(movies, container) {
             </div>
         `;
 
+        movieCard.addEventListener('click', () => {
+            window.location.href = `movie_details.html?id=${movie.id}`;
+        });
+
         container.appendChild(movieCard);
     });
 }
@@ -55,3 +59,4 @@ searchButton.addEventListener('click', searchMovies);
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') searchMovies();
 });
+
